@@ -13,7 +13,12 @@ class LessonsController extends \BaseController {
         // 2. No way to attach meta data
         // 3. Linking db structure to the API output
         // 4. No way to signal headers/response codes
-		return Lesson::all(); // Bad Practice
+
+        $lessons = Lesson::all();
+
+        return Response::json([
+            'data' => $lessons->toArray()
+        ], 200);
 	}
 
 	/**
@@ -44,7 +49,20 @@ class LessonsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$lesson = Lesson::find($id);
+
+        if ( ! $lesson)
+        {
+            return Response::json([
+                'error' => [
+                    'message' => 'Lesson does not exist'
+                ]
+            ], 404);
+        }
+
+        return Response::json([
+            'data' => $lesson->toArray()
+        ], 200);
 	}
 
 	/**

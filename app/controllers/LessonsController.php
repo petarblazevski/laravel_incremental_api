@@ -15,7 +15,6 @@ class LessonsController extends \BaseController {
         // 4. No way to signal headers/response codes
 
         $lessons = Lesson::all();
-
         return Response::json([
             'data' => $lessons->toArray()
         ], 200);
